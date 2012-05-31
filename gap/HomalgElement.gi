@@ -134,28 +134,6 @@ end );
 
 ##
 InstallMethod( \+,
-        "for homalg elements",
-        [ IsHomalgElement and IsZero, IsHomalgElement ],
-        
-  function( m, n )
-    
-    return n;
-    
-end );
-
-##
-InstallMethod( \+,
-        "for homalg elements",
-        [ IsHomalgElement, IsHomalgElement and IsZero ],
-        
-  function( m, n )
-    
-    return m;
-    
-end );
-
-##
-InstallMethod( \+,
         "for homalg ring elements",
         [ IS_RAT, IsHomalgElement ],
         
@@ -197,6 +175,28 @@ InstallMethod( \+,
 end );
 
 ##
+InstallMethod( \+,
+        "for homalg elements",
+        [ IsHomalgElement and IsZero, IsHomalgElement ],
+        
+  function( m, n )
+    
+    return n;
+    
+end );
+
+##
+InstallMethod( \+,
+        "for homalg elements",
+        [ IsHomalgElement, IsHomalgElement and IsZero ],
+        
+  function( m, n )
+    
+    return m;
+    
+end );
+
+##
 InstallMethod( \-,
         "for two homalg elements",
         [ IsHomalgElement, IsHomalgElement ],
@@ -217,6 +217,89 @@ InstallMethod( AdditiveInverseMutable,
     return HomalgElement( -UnderlyingMorphism( m ) );
     
 end );
+
+##
+InstallMethod( \*,
+        "for homalg elements",
+        [ IsInt, IsHomalgElement ],
+        
+  function( a, m )
+    
+    return HomalgElement( a * UnderlyingMorphism( m ) );
+    
+end );
+
+##
+InstallMethod( ZERO_MUT,
+        "for homalg elements",
+        [ IsHomalgElement ],
+        
+  function( m )
+    
+    return TheZeroElement( SuperObject( m ) );
+    
+end );
+
+## if everything else fails
+InstallMethod( \in,
+        "for homalg elements",
+        [ IsHomalgElement, IsStaticFinitelyPresentedObjectRep ],
+        
+  function( m, M )
+    local phi;
+    
+    phi := UnderlyingMorphism( m );
+    
+    return IsIdenticalObj( Range( phi ), M );
+    
+end );
+
+##
+InstallMethod( \in,
+        "for homalg elements",
+        [ IsHomalgElement, IsStaticFinitelyPresentedObjectRep and HasUnderlyingSubobject ],
+        
+  function( m, M )
+    
+    return m in UnderlyingSubobject( M );
+    
+end );
+
+##  <#GAPDoc Label="in:elements">
+##  <ManSection>
+##    <Attr Arg="m, N" Name="in" Label="for elements"/>
+##    <Returns><C>true</C> or <C>false</C></Returns>
+##    <Description>
+##      Is the element <A>m</A> of the object <M>M</M> included in the subobject <A>N</A><M>\leq M</M>,
+##      i.e., does the morphism (with the unit object as source and <M>M</M> as target)
+##      underling the element <A>m</A> of <M>M</M> factor over the subobject morphism <A>N</A><M>\to M</M>?
+##    <P/>
+##    <#Include Label="HomalgElement_in:example">
+##    <P/>
+##    <Listing Type="Code"><![CDATA[
+InstallMethod( \in,
+        "for homalg elements",
+        [ IsHomalgElement, IsStaticFinitelyPresentedSubobjectRep ],
+        
+  function( m, N )
+    local phi, psi;
+    
+    phi := UnderlyingMorphism( m );
+    
+    psi := MorphismHavingSubobjectAsItsImage( N );
+    
+    if not IsIdenticalObj( Range( phi ), Range( psi ) ) then
+        Error( "the super object of the subobject and the range ",
+               "of the morphism underlying the element do not coincide\n" );
+    fi;
+    
+    return IsZero( PreCompose( phi, CokernelEpi( psi ) ) );
+    
+end );
+##  ]]></Listing>
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 
 ####################################
 #
@@ -254,6 +337,17 @@ InstallMethod( HomalgElement,
     fi;
     
     return e;
+    
+end );
+
+##
+InstallMethod( TheZeroElement,
+        "for homalg static objects",
+        [ IsHomalgStaticObject ],
+        
+  function( M )
+    
+    return HomalgElement( TheZeroMorphism( StructureObject( M ), M ) );
     
 end );
 

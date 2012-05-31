@@ -382,6 +382,22 @@ DeclareAttribute( "Annihilator",
 DeclareAttribute( "EndomorphismRing",
         IsHomalgStaticObject );
 
+##  <#GAPDoc Label="UnitObject">
+##  <ManSection>
+##    <Prop Arg="M" Name="UnitObject"/>
+##    <Returns>a Chern character</Returns>
+##    <Description>
+##      <A>M</A> is a &homalg; object.
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareAttribute( "UnitObject",
+        IsHomalgStaticObject );
+
+DeclareAttribute( "TheZeroElement",
+        IsHomalgStaticObject );
+
 ##
 ## the attributes below are intrinsic:
 ##
@@ -584,7 +600,7 @@ DeclareOperation( "StructureObject",
         [ IsHomalgObjectOrMorphism ] );
 
 DeclareOperation( "HomalgCategory",
-        [ IsStructureObjectOrObjectOrMorphism ] );
+        [ IsObject ] );
 
 DeclareOperation( "MorphismConstructor",
         [ IsHomalgObjectOrMorphism ] );
@@ -675,6 +691,9 @@ DeclareOperation( "DecideZero",
         [ IsHomalgObjectOrMorphism ] );
 
 DeclareOperation( "ByASmallerPresentation",
+        [ IsHomalgObjectOrMorphism ] );
+
+DeclareOperation( "OnPresentationByFirstMorphismOfResolution",
         [ IsHomalgObjectOrMorphism ] );
 
 DeclareOperation( "Display",

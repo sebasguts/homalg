@@ -104,9 +104,9 @@ end );
 ####################################
 
 ##
-InstallOtherMethod( One,
+InstallMethod( UnitObject,
         "for homalg objects",
-        [ IsHomalgObject and IsHomalgRightObjectOrMorphismOfRightObjects ],
+        [ IsHomalgStaticObject and IsHomalgRightObjectOrMorphismOfRightObjects ],
         
   function( M )
     
@@ -115,15 +115,22 @@ InstallOtherMethod( One,
 end );
 
 ##
-InstallOtherMethod( One,
+InstallMethod( UnitObject,
         "for homalg objects",
-        [ IsHomalgObject and IsHomalgLeftObjectOrMorphismOfLeftObjects ],
+        [ IsHomalgStaticObject and IsHomalgLeftObjectOrMorphismOfLeftObjects ],
         
   function( M )
     
     return AsLeftObject( StructureObject( M ) );
     
 end );
+
+##
+InstallOtherMethod( One,
+        "for homalg objects",
+        [ IsHomalgStaticObject ],
+        
+  UnitObject );
 
 ## fallback method
 InstallMethod( ComparePresentationsForOutputOfFunctors,
@@ -157,6 +164,17 @@ InstallMethod( HomalgCategory,
     
 end );
 
+## fail method
+InstallMethod( HomalgCategory,
+        "for any object",
+        [ IsObject ],
+        
+  function( M )
+    
+    return fail;
+    
+end );
+
 ##
 InstallMethod( HomalgCategory,
         "for homalg static objects",
@@ -169,6 +187,28 @@ InstallMethod( HomalgCategory,
     fi;
     
     Error( "the component category is not bound\n" );
+    
+end );
+
+##
+InstallMethod( HomalgCategory,
+        "for homalg complexes",
+        [ IsHomalgComplex ],
+        
+  function( C )
+    
+    return HomalgCategory( LowestDegreeObject( C ) );
+    
+end );
+
+##
+InstallMethod( HomalgCategory,
+        "for homalg morphisms",
+        [ IsHomalgMorphism ],
+        
+  function( phi )
+    
+    return HomalgCategory( Source( phi ) );
     
 end );
 
@@ -342,11 +382,42 @@ end );
 
 ##
 InstallMethod( UnderlyingSubobject,
-               "for objects that have no subobject",
-               [ IsHomalgObject ],
-               
+        "for objects that have no subobject",
+        [ IsHomalgObject ],
+        
   function( M )
     
     return FullSubobject( M );
+    
+end );
+
+##
+InstallMethod( OnPresentationByFirstMorphismOfResolution,
+        "for objects that have no subobject",
+        [ IsHomalgObject ],
+        
+  function( M )
+    local d1, alpha, e1, cm, beta;
+    
+    d1 := FirstMorphismOfResolution( M );
+    
+    alpha := AnIsomorphism( Range( d1 ) )^-1;
+    
+    e1 := PreCompose( d1, alpha );
+    
+    cm := HomalgChainMorphism( alpha, HomalgComplex( d1 ), HomalgComplex( e1 ) );
+    
+    cm := CertainMorphismAsImageSquare( cm, 0 );
+    
+    beta := Cokernel( cm );
+    
+    ## check assertion
+    Assert( 2, IsIsomorphism( beta ) );
+    
+    SetIsIsomorphism( beta, true );
+    
+    PushPresentationByIsomorphism( beta^-1 );
+    
+    return M;
     
 end );
