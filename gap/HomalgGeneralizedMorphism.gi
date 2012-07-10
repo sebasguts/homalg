@@ -124,7 +124,7 @@ InstallMethod( GeneralizedMorphism,
     
     if not IsIdenticalObj( Range( associated_morphism ), Range( morphism_aid ) ) then
         
-        morphism_aid := CokernelEmb( morphism_aid );
+        morphism_aid := CokernelEpi( morphism_aid );
         
         if not IsIdenticalObj( Range( associated_morphism ), Range( morphism_aid ) ) then
             

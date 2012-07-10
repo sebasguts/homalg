@@ -71,3 +71,5 @@ ReadPackage( "homalg", "gap/LIMOR.gd" );
 ReadPackage( "homalg", "gap/LICPX.gd" );
 ReadPackage( "homalg", "gap/LICHM.gd" );
 
+ReadPackage( "homalg", "gap/HomalgGeneralizedMorphism.gd" );
+ReadPackage( "homalg", "gap/GeneralizedMorphismFunctors.gd" );

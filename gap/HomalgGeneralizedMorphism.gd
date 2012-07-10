@@ -28,7 +28,7 @@ DeclareCategory( "IsHomalgGeneralizedMorphism",
 ##  </ManSection>
 ##  <#/GAPDoc>
 
-DeclareCategory( "IsCategoryOfHomalgGeneralizedMorphisms",
+DeclareCategory( "IsHomalgCategoryOfGeneralizedMorphisms",
                  IsHomalgCategory );
 
 ####################################
@@ -140,6 +140,9 @@ DeclareAttribute( "MorphismAidSubobject",
         IsHomalgGeneralizedMorphism );
 
 DeclareAttribute( "GeneralizedInverse",
+        IsHomalgGeneralizedMorphism );
+
+DeclareAttribute( "KernelSubobject",
         IsHomalgGeneralizedMorphism );
 
 ####################################

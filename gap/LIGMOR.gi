@@ -12,7 +12,7 @@
 
 ##
 InstallImmediateMethod( IsMorphism,
-                        [ IsHomalgGeneralizedMorphism and HasMorphismAid and HasAssociatedMorphism ],
+                        IsHomalgGeneralizedMorphism and HasMorphismAid and HasAssociatedMorphism,
                         0,
                         
   function( phi )
@@ -37,7 +37,7 @@ end );
 
 ##
 InstallImmediateMethod( MorphismAidSubobject,
-                        [ IsHomalgGeneralizedMorphism and HasMorphismAid ],
+                        IsHomalgGeneralizedMorphism and HasMorphismAid,
                         0,
                           
   function( phi )
@@ -45,7 +45,7 @@ InstallImmediateMethod( MorphismAidSubobject,
     
     morphismaid := MorphismAid( phi );
     
-    if HasKernel( morphismaid ) or HasKernelSubobject( morphismaid ) then
+    if HasKernelSubobject( morphismaid ) then
         
         return KernelSubobject( morphismaid );
         
@@ -55,31 +55,31 @@ InstallImmediateMethod( MorphismAidSubobject,
     
 end );
 
-##
-InstallImmediateMethod( Kernel,
-               "for generalized morphisms",
-               [ IsHomalgGeneralizedMorphism and HasAssociatedMorphism ],
-               0,
-               
-  function( phi )
-    local associated_morphism;
-    
-    associated_morphism := AssociatedMorphism( phi );
-    
-    if HasKernel( associated_morphism )  then
-        
-        return Kernel( associated_morphism );
-        
-    fi;
-    
-    TryNextMethod();
-    
-end );
+# ##
+# InstallImmediateMethod( Kernel,
+#                "for generalized morphisms",
+#                IsHomalgGeneralizedMorphism and HasAssociatedMorphism,
+#                0,
+#                
+#   function( phi )
+#     local associated_morphism;
+#     
+#     associated_morphism := AssociatedMorphism( phi );
+#     
+#     if HasKernel( associated_morphism )  then
+#         
+#         return Kernel( associated_morphism );
+#         
+#     fi;
+#     
+#     TryNextMethod();
+#     
+# end );
 
 ##
 InstallImmediateMethod( KernelSubobject,
                "for generalized morphisms",
-               [ IsHomalgGeneralizedMorphism and HasAssociatedMorphism ],
+               IsHomalgGeneralizedMorphism and HasAssociatedMorphism,
                0,
                
   function( phi )

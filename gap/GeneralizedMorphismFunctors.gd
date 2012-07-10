@@ -10,11 +10,11 @@
 #############################################################################
 
 ## Coarsening
-DeclareGlobalFunction( "_Functor_Coarse" );
+DeclareGlobalFunction( "_Functor_Coarse_ForGeneralizedMorphisms" );
 
-DeclareGlobalVariable( "functor_Coarse" );
+DeclareGlobalVariable( "functor_Coarse_ForGeneralizedMorphisms" );
 
 ## PreCompose
-DeclareGlobalFunction( "_Functor_PreCompose" );
+DeclareGlobalFunction( "_Functor_PreCompose_ForGeneralizedMorphisms" );
 
-DeclareGlobalVariable( "functor_PreCompose" );
+DeclareGlobalVariable( "functor_PreCompose_ForGeneralizedMorphisms" );

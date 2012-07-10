@@ -300,9 +300,9 @@ DeclareAttribute( "KernelSubobject",
 ##
 DeclareOperation( "GetMorphismAid",
         [ IsHomalgMorphism ] );
-DeclareAttributeWithCustomGetter( "MorphismAid",
-        IsHomalgMorphism,
-        GetMorphismAid );
+# DeclareAttributeWithCustomGetter( "MorphismAid",
+#         IsHomalgMorphism,
+#         GetMorphismAid );
 
 ##  <#GAPDoc Label="GeneralizedInverse">
 ##  <ManSection>
@@ -342,14 +342,15 @@ DeclareAttribute( "DirectSummands",
 DeclareOperation( "RemoveMorphismAid",
         [ IsHomalgMorphism ] );
 
-DeclareOperation( "GeneralizedMorphism",
-        [ IsHomalgMorphism, IsObject ] );
+# DeclareOperation( "GeneralizedMorphism",
+#         [ IsHomalgMorphism, IsObject ] );
 
 DeclareOperation( "AddToMorphismAid",
         [ IsHomalgMorphism, IsObject ] );
 
-DeclareOperation( "AssociatedMorphism",
-        [ IsHomalgMorphism ] );
+## This change might cause bugs.
+DeclareAttribute( "AssociatedMorphism",
+        IsHomalgMorphism );
 
 DeclareOperation( "AnIsomorphism",
         [ IsHomalgObject ] );
