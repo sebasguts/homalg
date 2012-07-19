@@ -102,6 +102,19 @@ InstallMethod( HomalgCategory,
     
 end );
 
+InstallMethod( CombinedImage,
+               "for generalized morphisms",
+               [ IsHomalgGeneralizedMorphism ],
+               
+  function( phi )
+    local image_morphism;
+    
+    image_morphism := PostDivide( AssociatedMorphism( phi ), MorphismAid( phi ) );
+    
+    return UnderlyingObject( ImageSubobject( image_morphism ) );
+    
+end );
+
 ######################################
 #
 # Methods
@@ -146,4 +159,31 @@ InstallMethod( GeneralizedMorphism,
     return morphism;
     
 end );
-  
+
+#########################################
+#
+# Display
+#
+#########################################
+
+##
+InstallMethod( ViewObj,
+               "for generalized morphisms",
+               [ IsHomalgGeneralizedMorphism ],
+
+  function( phi )
+
+    Print( "<A generalized mophism>" );
+
+end );
+
+##
+InstallMethod( Display,
+               "for generalized morphisms",
+               [ IsHomalgGeneralizedMorphism ],
+
+  function( phi )
+
+    Print( "A generalized morphism.\n" );
+
+end );

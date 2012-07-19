@@ -145,6 +145,9 @@ DeclareAttribute( "GeneralizedInverse",
 DeclareAttribute( "KernelSubobject",
         IsHomalgGeneralizedMorphism );
 
+DeclareAttribute( "CombinedImage",
+        IsHomalgGeneralizedMorphism );
+
 ####################################
 #
 # methods:
@@ -153,6 +156,18 @@ DeclareAttribute( "KernelSubobject",
 
 DeclareOperation( "Coarse",
        [ IsHomalgGeneralizedMorphism, IsHomalgObjectOrMorphism ] );
+
+DeclareOperation( "IsEffectiveCoarsening",
+       [ IsHomalgGeneralizedMorphism, IsHomalgObjectOrMorphism ] );
+
+DeclareOperation( "CommonCoarsening",
+       [ IsHomalgGeneralizedMorphism, IsHomalgGeneralizedMorphism ] );
+
+DeclareOperation( "IsEffectiveCommonCoarsening",
+       [ IsHomalgGeneralizedMorphism, IsHomalgGeneralizedMorphism ] );
+
+DeclareOperation( "QuasiEqual",
+       [ IsHomalgGeneralizedMorphism, IsHomalgGeneralizedMorphism ] );
 
 ####################################
 #
