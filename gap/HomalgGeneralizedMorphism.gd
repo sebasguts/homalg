@@ -37,6 +37,9 @@ DeclareCategory( "IsHomalgCategoryOfGeneralizedMorphisms",
 #
 ####################################
 
+DeclareProperty( "twitter",
+        IsHomalgGeneralizedMorphism );
+
 ##  <#GAPDoc Label="IsGeneralizedMorphism">
 ##  <ManSection>
 ##    <Prop Arg="phi" Name="IsGeneralizedMorphism"/>
@@ -97,6 +100,9 @@ DeclareProperty( "IsGeneralizedIsomorphism",
 DeclareProperty( "IsOne",
         IsHomalgGeneralizedMorphism );
 
+DeclareProperty( "WasCoarsedEffective",
+        IsHomalgGeneralizedMorphism );
+
 ####################################
 #
 # attributes:
@@ -148,6 +154,9 @@ DeclareAttribute( "KernelSubobject",
 DeclareAttribute( "CombinedImage",
         IsHomalgGeneralizedMorphism );
 
+DeclareAttribute( "IsCoarsedOf",
+        IsHomalgGeneralizedMorphism );
+
 ####################################
 #
 # methods:
@@ -167,6 +176,9 @@ DeclareOperation( "IsEffectiveCommonCoarsening",
        [ IsHomalgGeneralizedMorphism, IsHomalgGeneralizedMorphism ] );
 
 DeclareOperation( "QuasiEqual",
+       [ IsHomalgGeneralizedMorphism, IsHomalgGeneralizedMorphism ] );
+
+DeclareOperation( "Lifts",
        [ IsHomalgGeneralizedMorphism, IsHomalgGeneralizedMorphism ] );
 
 ####################################

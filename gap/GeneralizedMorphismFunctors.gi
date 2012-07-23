@@ -73,7 +73,11 @@ InstallGlobalFunction( _Functor_Coarse_ForGeneralizedMorphisms,
     
     new_morphism := PreCompose( AssociatedMorphism( morphism ), embedding );
     
-    return GeneralizedMorphism( new_morphism, coarse_morphism );
+    new_morphism := GeneralizedMorphism( new_morphism, coarse_morphism );
+    
+    SetIsCoarsedOf( new_morphism, [ morphism, coarse_morphism ] );
+    
+    return new_morphism;
     
 end );
 
@@ -387,3 +391,51 @@ functor_QuasiEqual_ForGeneralizedMorphisms!.ContainerForWeakPointersOnComputedBa
 
 InstallFunctor( functor_QuasiEqual_ForGeneralizedMorphisms );
 
+######################
+#
+# Lifts
+#
+######################
+
+##
+InstallGlobalFunction( _Functor_lifts_ForGeneralizedMorphisms,
+  
+  function( beta, gamma )
+    local common_coarsening, image_beta, image_gamma, gamma_coarsed;
+    
+    common_coarsening := CommonCoarsening( beta, gamma );
+    
+    image_beta := CombinedImage( common_coarsening[ 1 ] );
+    
+    image_gamma := CombinedImage( common_coarsening[ 2 ] );
+    
+    image_beta := CokernelEpi( EmbeddingInSuperObject( UnderlyingSubobject( image_beta ) ) );
+    
+    image_gamma := EmbeddingInSuperObject( UnderlyingSubobject( image_gamma ) );
+    
+    if not IsZero( PreCompose( image_gamma, image_beta ) ) then
+        
+        return false;
+        
+    fi;
+    
+    return WasCoarsedEffective( common_coarsening[ 2 ] );
+    
+end );
+
+InstallValue( functor_Lifts_ForGeneralizedMorphisms,
+        CreateHomalgFunctor(
+                [ "name", "Lifts" ],
+                [ "category", GENERALIZED_MORPHISMS.category ],
+                [ "operation", "Lifts" ],
+                [ "number_of_arguments", 2 ],
+                [ "1", [ [ "covariant" ], [ IsHomalgGeneralizedMorphism ] ] ],
+                [ "2", [ [ "covariant" ], [ IsHomalgGeneralizedMorphism ] ] ],
+                [ "OnObjects", _Functor_Lifts_ForGeneralizedMorphisms ]
+                )
+        );
+
+functor_Lifts_ForGeneralizedMorphisms!.ContainerForWeakPointersOnComputedBasicObjects :=
+  ContainerForWeakPointers( TheTypeContainerForWeakPointersOnComputedValuesOfFunctor );
+
+InstallFunctor( functor_Lifts_ForGeneralizedMorphisms );

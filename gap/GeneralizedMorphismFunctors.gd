@@ -38,3 +38,8 @@ DeclareGlobalVariable( "functor_IsEffectiveCoarsening_ForGeneralizedMorphisms" )
 DeclareGlobalFunction( "_Functor_QuasiEqual_ForGeneralizedMorphisms" );
 
 DeclareGlobalVariable( "functor_QuasiEqual_ForGeneralizedMorphisms" );
+
+## Lifts
+DeclareGlobalFunction( "_Functor_Lifts_ForGeneralizedMorphisms" );
+
+DeclareGlobalVariable( "functor_Lifts_ForGeneralizedMorphisms" );

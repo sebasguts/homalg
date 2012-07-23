@@ -54,6 +54,65 @@ BindGlobal( "TheTypeCategoryOfHomalgGeneralizedMorphisms",
 
 ####################################
 #
+# properties
+#
+####################################
+
+##
+InstallMethod( "IsGeneralizedEpimorphism",
+               "for generalized morphisms",
+               [ IsHomalgGeneralizedMorphism ],
+               
+  function( phi )
+    
+    return IsEpimorphism( AssociatedMorphism( phi ) );
+    
+end );
+
+##
+InstallMethod( "IsGeneralizedMonomorphism",
+               "for generalized morphisms",
+               [ IsHomalgGeneralizedMorphism ],
+               
+  function( phi )
+    
+    return IsMonomorphism( AssociatedMorphism( phi ) );
+    
+end );
+
+##
+InstallMethod( "IsGeneralizedIsomorphism",
+               "for generalized morphisms",
+               [ IsHomalgGeneralizedMorphism ],
+               
+  function( phi )
+    
+    return IsIsomorphism( AssociatedMorphism( phi ) );
+    
+end );
+
+##
+InstallMethod( "WasCoarsedEffective",
+               "for generalized morphisms",
+               [ IsHomalgGeneralizedMorphism ],
+               
+  function( phi )
+    local coarsed_from;
+    
+    coarsed_from := IsCoarsedOf( phi );
+    
+    if coarsed_from <> fail then
+        
+        return IsEffectiveCoarsening( coarsed_from[ 1 ], coarsed_from[ 2 ] );
+        
+    fi;
+        
+    return false;
+    
+end );
+
+####################################
+#
 # attributes:
 #
 ####################################
@@ -112,6 +171,16 @@ InstallMethod( CombinedImage,
     image_morphism := PostDivide( AssociatedMorphism( phi ), MorphismAid( phi ) );
     
     return UnderlyingObject( ImageSubobject( image_morphism ) );
+    
+end );
+
+InstallMethod( IsCoarsedOf,
+               "the fallback method for generalized morphisms",
+               [ IsHomalgGeneralizedMorphism ],
+               
+  function( phi )
+    
+    return fail;
     
 end );
 

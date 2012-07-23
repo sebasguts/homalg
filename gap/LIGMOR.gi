@@ -96,3 +96,63 @@ InstallImmediateMethod( KernelSubobject,
     TryNextMethod();
     
 end );
+
+##
+InstallImmediateMethod( IsGeneralizedEpimorphism,
+                IsHomalgGeneralizedMorphism and HasAssociatedMorphism,
+                0,
+                
+  function( phi )
+    local associated_morphism;
+    
+    associated_morphism := AssociatedMorphism( phi );
+    
+    if HasIsEpimorphism( associated_morphism ) then
+        
+        return IsEpimorphism( associated_morphism );
+        
+    fi;
+    
+    TryNextMethod();
+    
+end );
+
+##
+InstallImmediateMethod( IsGeneralizedMonomorphism,
+                IsHomalgGeneralizedMorphism and HasAssociatedMorphism,
+                0,
+                
+  function( phi )
+    local associated_morphism;
+    
+    associated_morphism := AssociatedMorphism( phi );
+    
+    if HasIsMonomorphism( associated_morphism ) then
+        
+        return IsMonomorphism( associated_morphism );
+        
+    fi;
+    
+    TryNextMethod();
+    
+end );
+
+##
+InstallImmediateMethod( IsGeneralizedIsomorphism,
+                IsHomalgGeneralizedMorphism and HasAssociatedMorphism,
+                0,
+                
+  function( phi )
+    local associated_morphism;
+    
+    associated_morphism := AssociatedMorphism( phi );
+    
+    if HasIsIsomorphism( associated_morphism ) then
+        
+        return IsIsomorphism( associated_morphism );
+        
+    fi;
+    
+    TryNextMethod();
+    
+end );
