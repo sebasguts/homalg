@@ -178,7 +178,10 @@ DeclareOperation( "IsEffectiveCommonCoarsening",
 DeclareOperation( "QuasiEqual",
        [ IsHomalgGeneralizedMorphism, IsHomalgGeneralizedMorphism ] );
 
-DeclareOperation( "Lifts",
+DeclareOperation( "Divides",
+       [ IsHomalgGeneralizedMorphism, IsHomalgGeneralizedMorphism ] );
+
+DeclareOperation( "Lift",
        [ IsHomalgGeneralizedMorphism, IsHomalgGeneralizedMorphism ] );
 
 ####################################

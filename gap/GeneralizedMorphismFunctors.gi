@@ -393,12 +393,12 @@ InstallFunctor( functor_QuasiEqual_ForGeneralizedMorphisms );
 
 ######################
 #
-# Lifts
+# Divides
 #
 ######################
 
 ##
-InstallGlobalFunction( _Functor_lifts_ForGeneralizedMorphisms,
+InstallGlobalFunction( _Functor_Divides_ForGeneralizedMorphisms,
   
   function( beta, gamma )
     local common_coarsening, image_beta, image_gamma, gamma_coarsed;
@@ -423,19 +423,83 @@ InstallGlobalFunction( _Functor_lifts_ForGeneralizedMorphisms,
     
 end );
 
-InstallValue( functor_Lifts_ForGeneralizedMorphisms,
+InstallValue( functor_Divides_ForGeneralizedMorphisms,
         CreateHomalgFunctor(
-                [ "name", "Lifts" ],
+                [ "name", "Divides" ],
                 [ "category", GENERALIZED_MORPHISMS.category ],
-                [ "operation", "Lifts" ],
+                [ "operation", "Divides" ],
                 [ "number_of_arguments", 2 ],
                 [ "1", [ [ "covariant" ], [ IsHomalgGeneralizedMorphism ] ] ],
                 [ "2", [ [ "covariant" ], [ IsHomalgGeneralizedMorphism ] ] ],
-                [ "OnObjects", _Functor_Lifts_ForGeneralizedMorphisms ]
+                [ "OnObjects", _Functor_Divides_ForGeneralizedMorphisms ]
                 )
         );
 
-functor_Lifts_ForGeneralizedMorphisms!.ContainerForWeakPointersOnComputedBasicObjects :=
+functor_Divides_ForGeneralizedMorphisms!.ContainerForWeakPointersOnComputedBasicObjects :=
   ContainerForWeakPointers( TheTypeContainerForWeakPointersOnComputedValuesOfFunctor );
 
-InstallFunctor( functor_Lifts_ForGeneralizedMorphisms );
+InstallFunctor( functor_Divides_ForGeneralizedMorphisms );
+
+######################
+#
+# Divides
+#
+######################
+
+##
+InstallGlobalFunction( _Functor_Lift_ForGeneralizedMorphisms,
+                       
+  function( beta, gamma )
+    local beta_associated_morphism, beta_help, gamma_help, coarsed_gamma_help, projection_coarsed_help_to_beta_factor,
+          beta_from_factor, alpha_aid_object, common_coarsening, alpha_associated;
+    
+    if not Divides( beta, gamma ) then
+        
+        Error( "cannot lift this morphisms\n" );
+        
+        return false;
+        
+    fi;
+    
+    beta_associated_morphism := AssociatedMorphism( beta );
+    
+    beta_help := MorphismAid( beta );
+    
+    gamma_help := MorphismAid( gamma );
+    
+    coarsed_gamma_help := ImageObjectEmbedding( CoproductMorphism( beta_help, gamma_help ) );
+    
+    projection_coarsed_help_to_beta_factor := PreCompose( coarsed_gamma_help, beta_help );
+    
+    alpha_aid_object := PostDivide( projection_coarsed_help_to_beta_factor, beta_associated_morphism );
+    
+    alpha_aid_object := CokernelEpi( ImageObjectEmbedding( alpha_aid_object ) );
+    
+    beta_from_factor := PreDivide( alpha_aid_object, beta_associated_morphism );
+    
+    beta_from_factor := GeneralizedMorphism( beta_from_factor, beta_help );
+    
+    common_coarsening := CommonCoarsening( beta_from_factor, gamma );
+    
+    alpha_associated := PostDivide( AssociatedMorphism( gamma ), AssociatedMorphism( beta_from_factor ) );
+    
+    return GeneralizedMorphism( alpha_associated, alpha_aid_object );
+    
+end );
+
+InstallValue( functor_Lift_ForGeneralizedMorphisms,
+        CreateHomalgFunctor(
+                [ "name", "Lift" ],
+                [ "category", GENERALIZED_MORPHISMS.category ],
+                [ "operation", "Lift" ],
+                [ "number_of_arguments", 2 ],
+                [ "1", [ [ "covariant" ], [ IsHomalgGeneralizedMorphism ] ] ],
+                [ "2", [ [ "covariant" ], [ IsHomalgGeneralizedMorphism ] ] ],
+                [ "OnObjects", _Functor_Lift_ForGeneralizedMorphisms ]
+                )
+        );
+
+functor_Lift_ForGeneralizedMorphisms!.ContainerForWeakPointersOnComputedBasicObjects :=
+  ContainerForWeakPointers( TheTypeContainerForWeakPointersOnComputedValuesOfFunctor );
+
+InstallFunctor( functor_Lift_ForGeneralizedMorphisms );

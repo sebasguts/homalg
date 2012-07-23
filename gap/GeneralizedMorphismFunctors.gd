@@ -40,6 +40,10 @@ DeclareGlobalFunction( "_Functor_QuasiEqual_ForGeneralizedMorphisms" );
 DeclareGlobalVariable( "functor_QuasiEqual_ForGeneralizedMorphisms" );
 
 ## Lifts
-DeclareGlobalFunction( "_Functor_Lifts_ForGeneralizedMorphisms" );
+DeclareGlobalFunction( "_Functor_Divides_ForGeneralizedMorphisms" );
 
-DeclareGlobalVariable( "functor_Lifts_ForGeneralizedMorphisms" );
+DeclareGlobalVariable( "functor_Divides_ForGeneralizedMorphisms" );
+
+DeclareGlobalFunction( "_Functor_Lift_ForGeneralizedMorphisms"
+
+DeclareGlobalVariable( "functor_Lift_ForGeneralizedMorphisms" );
