@@ -182,7 +182,7 @@ end );
 InstallGlobalFunction( _Functor_IsEffectiveCoarsening_ForGeneralizedMorphisms,
   
   function( morphism, coarse_morphism )
-    local old_morphism_aid, morphism_aid_embedding, combined_image_embedding, pullback,
+    local old_morphism_aid, morphism_aid_embedding, coarsed_morphism, combined_image_embedding, pullback,
           pullback_morphism, pullback_morphism_to_common_target, cokernel_pullback;
     
     old_morphism_aid := MorphismAid( morphism );
@@ -201,9 +201,11 @@ InstallGlobalFunction( _Functor_IsEffectiveCoarsening_ForGeneralizedMorphisms,
         
     fi;
     
-    morphism_aid_embedding := KernelEmb( old_morphism_aid );
+    morphism_aid_embedding := KernelEmb( coarse_morphism );
     
-    combined_image_embedding := EmbeddingInSuperObject( UnderlyingSubobject( CombinedImage( morphism ) ) );
+    coarsed_morphism := Coarse( morphism, coarse_morphism );
+    
+    combined_image_embedding := EmbeddingInSuperObject( UnderlyingSubobject( CombinedImage( coarsed_morphism ) ) );
     
     pullback := Pullback( morphism_aid_embedding, combined_image_embedding );
     
@@ -215,7 +217,7 @@ InstallGlobalFunction( _Functor_IsEffectiveCoarsening_ForGeneralizedMorphisms,
         
         cokernel_pullback := CokernelEpi( pullback_morphism_to_common_target );
         
-        if IsZero( PreCompose( morphism_aid_embedding, cokernel_pullback ) ) then
+        if IsZero( PreCompose( KernelEmb( old_morphism_aid ), cokernel_pullback ) ) then
             
             return true;
             
@@ -279,7 +281,7 @@ InstallValue( functor_IsEffectiveCommonCoarsening_ForGeneralizedMorphisms,
                 [ "number_of_arguments", 2 ],
                 [ "1", [ [ "covariant" ], [ IsHomalgGeneralizedMorphism ] ] ],
                 [ "2", [ [ "covariant" ], [ IsHomalgGeneralizedMorphism ] ] ],
-                [ "OnObjects", _Functor_CommonCoarsening_ForGeneralizedMorphisms ]
+                [ "OnObjects", _Functor_IsEffectiveCommonCoarsening_ForGeneralizedMorphisms ]
                 )
         );
 
