@@ -157,6 +157,9 @@ DeclareAttribute( "CombinedImage",
 DeclareAttribute( "IsCoarsedOf",
         IsHomalgGeneralizedMorphism );
 
+DeclareAttribute( "GeneralizedInverse",
+        IsHomalgGeneralizedMorphism );
+
 ####################################
 #
 # methods:
@@ -183,6 +186,9 @@ DeclareOperation( "Divides",
 
 DeclareOperation( "Lift",
        [ IsHomalgGeneralizedMorphism, IsHomalgGeneralizedMorphism ] );
+
+DeclareOperation( "TheGeneralizedIdentityMorphism",
+       [ IsHomalgObject ] );
 
 ####################################
 #

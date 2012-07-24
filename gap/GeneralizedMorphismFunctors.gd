@@ -44,6 +44,11 @@ DeclareGlobalFunction( "_Functor_Divides_ForGeneralizedMorphisms" );
 
 DeclareGlobalVariable( "functor_Divides_ForGeneralizedMorphisms" );
 
-DeclareGlobalFunction( "_Functor_Lift_ForGeneralizedMorphisms"
+DeclareGlobalFunction( "_Functor_Lift_ForGeneralizedMorphisms" );
 
 DeclareGlobalVariable( "functor_Lift_ForGeneralizedMorphisms" );
+
+## IdentityMorphism
+DeclareGlobalFunction( "_Functor_IdentityMorphism_ForGeneralizedMorphisms" );
+
+DeclareGlobalVariable( "functor_IdentityMorphism_ForGeneralizedMorphisms" );

@@ -115,7 +115,7 @@ InstallGlobalFunction( _Functor_CommonCoarsening_ForGeneralizedMorphisms,
         
     fi;
     
-    product_morphism := CoproductMorphism( KernelEmb( MorphismAid( phi ) ), KernelEmb( MorphismAid( psi ) ) );
+    product_morphism := CokernelEpi( CoproductMorphism( KernelEmb( MorphismAid( phi ) ), KernelEmb( MorphismAid( psi ) ) ) );
     
     output_morphisms := [ Coarse( phi, product_morphism ), Coarse( psi, product_morphism ) ];
     
@@ -262,7 +262,7 @@ InstallGlobalFunction( _Functor_IsEffectiveCommonCoarsening_ForGeneralizedMorphi
         
     fi;
     
-    product_morphism := CoproductMorphism( KernelEmb( MorphismAid( phi ) ), KernelEmb( MorphismAid( psi ) ) );
+    product_morphism := CokernelEpi( CoproductMorphism( KernelEmb( MorphismAid( phi ) ), KernelEmb( MorphismAid( psi ) ) ) );
     
     output_morphisms := [ IsEffectiveCoarsening( phi, product_morphism ), IsEffectiveCoarsening( psi, product_morphism ) ];
     
@@ -302,7 +302,7 @@ InstallGlobalFunction( _Functor_PreCompose_ForGeneralizedMorphisms,
     
     phi_aid := MorphismAid( phi );
     
-    K_as_product := CoproductMorphism( phi_aid, KernelEmb( AssociatedMorphism( psi ) ) );
+    K_as_product := CoproductMorphism( KernelEmb( phi_aid ), KernelEmb( AssociatedMorphism( psi ) ) );
     
     phi_K := CokernelEpi( K_as_product );
     
@@ -467,13 +467,13 @@ InstallGlobalFunction( _Functor_Lift_ForGeneralizedMorphisms,
     
     gamma_help := MorphismAid( gamma );
     
-    coarsed_gamma_help := ImageObjectEmbedding( CoproductMorphism( beta_help, gamma_help ) );
+    coarsed_gamma_help := ImageObjectEmb( CoproductMorphism( beta_help, gamma_help ) );
     
     projection_coarsed_help_to_beta_factor := PreCompose( coarsed_gamma_help, beta_help );
     
     alpha_aid_object := PostDivide( projection_coarsed_help_to_beta_factor, beta_associated_morphism );
     
-    alpha_aid_object := CokernelEpi( ImageObjectEmbedding( alpha_aid_object ) );
+    alpha_aid_object := CokernelEpi( ImageObjectEmb( alpha_aid_object ) );
     
     beta_from_factor := PreDivide( alpha_aid_object, beta_associated_morphism );
     
@@ -503,3 +503,37 @@ functor_Lift_ForGeneralizedMorphisms!.ContainerForWeakPointersOnComputedBasicObj
   ContainerForWeakPointers( TheTypeContainerForWeakPointersOnComputedValuesOfFunctor );
 
 InstallFunctor( functor_Lift_ForGeneralizedMorphisms );
+
+######################
+#
+# TheGeneralizedIdentityMorphism
+#
+######################
+
+##
+InstallGlobalFunction( _Functor_IdentityMorphism_ForGeneralizedMorphisms,
+                       
+  function( M )
+    local identity_of_module;
+    
+    identity_of_module := TheIdentityMorphism( M );
+    
+    return GeneralizedMorphism( identity_of_module, identity_of_module );
+    
+end );
+
+InstallValue( functor_IdentityMorphism_ForGeneralizedMorphisms,
+        CreateHomalgFunctor(
+                [ "name", "TheGeneralizedIdentityMorphism" ],
+                [ "category", GENERALIZED_MORPHISMS.category ],
+                [ "operation", "TheGeneralizedIdentityMorphism" ],
+                [ "number_of_arguments", 1 ],
+                [ "1", [ [ "covariant" ], [ IsHomalgObject ] ] ],
+                [ "OnObjects", _Functor_IdentityMorphism_ForGeneralizedMorphisms ]
+                )
+        );
+
+functor_IdentityMorphism_ForGeneralizedMorphisms!.ContainerForWeakPointersOnComputedBasicObjects :=
+  ContainerForWeakPointers( TheTypeContainerForWeakPointersOnComputedValuesOfFunctor );
+
+InstallFunctor( functor_IdentityMorphism_ForGeneralizedMorphisms );

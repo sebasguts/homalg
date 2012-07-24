@@ -59,7 +59,7 @@ BindGlobal( "TheTypeCategoryOfHomalgGeneralizedMorphisms",
 ####################################
 
 ##
-InstallMethod( "IsGeneralizedEpimorphism",
+InstallMethod( IsGeneralizedEpimorphism,
                "for generalized morphisms",
                [ IsHomalgGeneralizedMorphism ],
                
@@ -70,7 +70,7 @@ InstallMethod( "IsGeneralizedEpimorphism",
 end );
 
 ##
-InstallMethod( "IsGeneralizedMonomorphism",
+InstallMethod( IsGeneralizedMonomorphism,
                "for generalized morphisms",
                [ IsHomalgGeneralizedMorphism ],
                
@@ -81,7 +81,7 @@ InstallMethod( "IsGeneralizedMonomorphism",
 end );
 
 ##
-InstallMethod( "IsGeneralizedIsomorphism",
+InstallMethod( IsGeneralizedIsomorphism,
                "for generalized morphisms",
                [ IsHomalgGeneralizedMorphism ],
                
@@ -92,7 +92,7 @@ InstallMethod( "IsGeneralizedIsomorphism",
 end );
 
 ##
-InstallMethod( "WasCoarsedEffective",
+InstallMethod( WasCoarsedEffective,
                "for generalized morphisms",
                [ IsHomalgGeneralizedMorphism ],
                
@@ -161,6 +161,7 @@ InstallMethod( HomalgCategory,
     
 end );
 
+##
 InstallMethod( CombinedImage,
                "for generalized morphisms",
                [ IsHomalgGeneralizedMorphism ],
@@ -174,6 +175,7 @@ InstallMethod( CombinedImage,
     
 end );
 
+##
 InstallMethod( IsCoarsedOf,
                "the fallback method for generalized morphisms",
                [ IsHomalgGeneralizedMorphism ],
@@ -184,11 +186,42 @@ InstallMethod( IsCoarsedOf,
     
 end );
 
+##
+InstallMethod( GeneralizedInverse,
+               "for generalized morphisms",
+               [ IsHomalgGeneralizedMorphism ],
+               
+  function( phi )
+    local range_object;
+    
+    if not IsGeneralizedEpimorphism( phi ) then
+        
+        Error( "cannot compute generalized inverse, map is no epimorphism\n" );
+        
+    fi;
+    
+    range_object := Range( phi );
+    
+    return Lift( TheGeneralizedIdentityMorphism( range_object ), phi );
+    
+end );
+
 ######################################
 #
 # Methods
 #
 ######################################
+
+##
+InstallMethod( EQ,
+               "for generalized morphism, this is not quasi-equal",
+               [ IsHomalgGeneralizedMorphism, IsHomalgGeneralizedMorphism ],
+               
+  function( phi, psi )
+    
+    return IsIdenticalObj( phi, psi );
+    
+end );
 
 ######################################
 #
