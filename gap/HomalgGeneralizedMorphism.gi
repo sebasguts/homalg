@@ -167,11 +167,15 @@ InstallMethod( CombinedImage,
                [ IsHomalgGeneralizedMorphism ],
                
   function( phi )
-    local image_morphism;
+    local image_morphism, image_projection, combination_of_morphisms;
     
-    image_morphism := PostDivide( AssociatedMorphism( phi ), MorphismAid( phi ) );
+    image_morphism := ImageObjectEmb( AssociatedMorphism( phi ) );
     
-    return UnderlyingObject( ImageSubobject( image_morphism ) );
+    image_projection := CokernelEpi( image_morphism );
+    
+    combination_of_morphisms := PreCompose( MorphismAid( phi ), image_projection );
+    
+    return UnderlyingObject( KernelSubobject( combination_of_morphisms ) );
     
 end );
 
