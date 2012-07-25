@@ -302,6 +302,12 @@ InstallGlobalFunction( _Functor_PreCompose_ForGeneralizedMorphisms,
   function( phi, psi )
     local phi_aid, K_as_product, phi_K, phi_coarsed, L_as_projection, psi_L, psi_coarsed;
     
+    if not IsIdenticalObj( Range( phi ), Source( psi ) ) then
+        
+        Error( "cannot compose these morphisms\n" );
+        
+    fi;
+    
     phi_aid := MorphismAid( phi );
     
     K_as_product := CoproductMorphism( KernelEmb( phi_aid ), KernelEmb( AssociatedMorphism( psi ) ) );
@@ -310,7 +316,7 @@ InstallGlobalFunction( _Functor_PreCompose_ForGeneralizedMorphisms,
     
     phi_coarsed := Coarse( phi, phi_K );
     
-    L_as_projection := PreCompose( AssociatedMorphism( psi ), K_as_product );
+    L_as_projection := CokernelEpi( PreCompose( AssociatedMorphism( psi ), K_as_product ) );
     
     psi_coarsed := Coarse( psi, L_as_projection );
     
