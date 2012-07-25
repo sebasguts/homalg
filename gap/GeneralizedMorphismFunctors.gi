@@ -469,7 +469,7 @@ InstallGlobalFunction( _Functor_Lift_ForGeneralizedMorphisms,
     
     gamma_help := MorphismAid( gamma );
     
-    coarsed_gamma_help := ImageObjectEmb( CoproductMorphism( beta_help, gamma_help ) );
+    coarsed_gamma_help := CoproductMorphism( KernelEmb( beta_help ), KernelEmb( gamma_help ) );
     
     projection_coarsed_help_to_beta_factor := PreCompose( coarsed_gamma_help, beta_help );
     
