@@ -450,16 +450,15 @@ InstallFunctor( functor_Divides_ForGeneralizedMorphisms );
 
 ######################
 #
-# Divides
+# PostDivide
 #
 ######################
 
 ##
-InstallGlobalFunction( _Functor_Lift_ForGeneralizedMorphisms,
+InstallGlobalFunction( _Functor_PostDivide_ForGeneralizedMorphisms,
                        
-  function( beta, gamma )
-    local beta_associated_morphism, beta_help, gamma_help, coarsed_gamma_help, projection_coarsed_help_to_beta_factor,
-          beta_from_factor, alpha_aid_object, common_coarsening, alpha_associated;
+  function( gamma, beta )
+    local beta_associated, coarsed_morphisms, psi, psi_aid, beta2;
     
     if not Divides( beta, gamma ) then
         
@@ -469,48 +468,34 @@ InstallGlobalFunction( _Functor_Lift_ForGeneralizedMorphisms,
         
     fi;
     
-    beta_associated_morphism := AssociatedMorphism( beta );
+    coarsed_morphisms := CommonCoarsening( gamma, beta );
     
-    beta_help := MorphismAid( beta );
+    psi_aid := CokernelEpi( KernelEmb( AssociatedMorphism( coarsed_morphisms[ 2 ] ) ) );
     
-    gamma_help := MorphismAid( gamma );
+    beta2 := PreDivide( psi_aid, AssociatedMorphism( coarsed_morphisms[ 2 ] ) );
     
-    coarsed_gamma_help := CoproductMorphism( KernelEmb( beta_help ), KernelEmb( gamma_help ) );
+    psi := PostDivide( AssociatedMorphism( coarsed_morphisms[ 1 ] ), beta2 );
     
-    projection_coarsed_help_to_beta_factor := PreCompose( coarsed_gamma_help, beta_help );
-    
-    alpha_aid_object := PostDivide( projection_coarsed_help_to_beta_factor, beta_associated_morphism );
-    
-    alpha_aid_object := CokernelEpi( ImageObjectEmb( alpha_aid_object ) );
-    
-    beta_from_factor := PreDivide( alpha_aid_object, beta_associated_morphism );
-    
-    beta_from_factor := GeneralizedMorphism( beta_from_factor, beta_help );
-    
-    common_coarsening := CommonCoarsening( beta_from_factor, gamma );
-    
-    alpha_associated := PostDivide( AssociatedMorphism( gamma ), AssociatedMorphism( beta_from_factor ) );
-    
-    return GeneralizedMorphism( alpha_associated, alpha_aid_object );
+    return GeneralizedMorphism( psi, psi_aid );
     
 end );
 
-InstallValue( functor_Lift_ForGeneralizedMorphisms,
+InstallValue( functor_PostDivide_ForGeneralizedMorphisms,
         CreateHomalgFunctor(
-                [ "name", "Lift" ],
+                [ "name", "PostDivide" ],
                 [ "category", GENERALIZED_MORPHISMS.category ],
-                [ "operation", "Lift" ],
+                [ "operation", "PostDivide" ],
                 [ "number_of_arguments", 2 ],
                 [ "1", [ [ "covariant" ], [ IsHomalgGeneralizedMorphism ] ] ],
                 [ "2", [ [ "covariant" ], [ IsHomalgGeneralizedMorphism ] ] ],
-                [ "OnObjects", _Functor_Lift_ForGeneralizedMorphisms ]
+                [ "OnObjects", _Functor_PostDivide_ForGeneralizedMorphisms ]
                 )
         );
 
-functor_Lift_ForGeneralizedMorphisms!.ContainerForWeakPointersOnComputedBasicObjects :=
+functor_PostDivide_ForGeneralizedMorphisms!.ContainerForWeakPointersOnComputedBasicObjects :=
   ContainerForWeakPointers( TheTypeContainerForWeakPointersOnComputedValuesOfFunctor );
 
-InstallFunctor( functor_Lift_ForGeneralizedMorphisms );
+InstallFunctor( functor_PostDivide_ForGeneralizedMorphisms );
 
 ######################
 #

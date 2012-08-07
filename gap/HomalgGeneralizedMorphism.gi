@@ -111,6 +111,17 @@ InstallMethod( WasCoarsedEffective,
     
 end );
 
+##
+InstallMethod( MorphismAidIsMonomorphism,
+               "for generalized morphisms",
+               [ IsHomalgGeneralizedMorphism ],
+               
+  function( phi )
+    
+    return IsMonomorphism( MorphismAid( phi ) );
+    
+end );
+
 ####################################
 #
 # attributes:
@@ -206,7 +217,7 @@ InstallMethod( GeneralizedInverse,
     
     range_object := Range( phi );
     
-    return Lift( TheGeneralizedIdentityMorphism( range_object ), phi );
+    return PostDivide( phi, TheGeneralizedIdentityMorphism( range_object ) );
     
 end );
 

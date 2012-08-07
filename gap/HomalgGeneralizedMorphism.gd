@@ -103,6 +103,9 @@ DeclareProperty( "IsOne",
 DeclareProperty( "WasCoarsedEffective",
         IsHomalgGeneralizedMorphism );
 
+DeclareProperty( "MorphismAidIsMonomorphism",
+        IsHomalgGeneralizedMorphism );
+
 ####################################
 #
 # attributes:
@@ -184,7 +187,7 @@ DeclareOperation( "QuasiEqual",
 DeclareOperation( "Divides",
        [ IsHomalgGeneralizedMorphism, IsHomalgGeneralizedMorphism ] );
 
-DeclareOperation( "Lift",
+DeclareOperation( "PostDivide",
        [ IsHomalgGeneralizedMorphism, IsHomalgGeneralizedMorphism ] );
 
 DeclareOperation( "TheGeneralizedIdentityMorphism",
