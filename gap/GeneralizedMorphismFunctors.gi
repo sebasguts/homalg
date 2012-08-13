@@ -316,11 +316,11 @@ InstallGlobalFunction( _Functor_PreCompose_ForGeneralizedMorphisms,
     
     phi_coarsed := Coarse( phi, phi_K );
     
-    L_as_projection := CokernelEpi( PreCompose( AssociatedMorphism( psi ), K_as_product ) );
+    L_as_projection := CokernelEpi( PreCompose( K_as_product, AssociatedMorphism( psi ) ) );
     
     psi_coarsed := Coarse( psi, L_as_projection );
     
-    return GeneralizedMorphism( PreCompose( AssociatedMorphism( psi_coarsed ), AssociatedMorphism( phi_coarsed ) ), L_as_projection );
+    return GeneralizedMorphism( PreCompose( AssociatedMorphism( phi_coarsed ), AssociatedMorphism( psi_coarsed ) ), L_as_projection );
     
 end );
 
@@ -458,7 +458,7 @@ InstallFunctor( functor_Divides_ForGeneralizedMorphisms );
 InstallGlobalFunction( _Functor_PostDivide_ForGeneralizedMorphisms,
                        
   function( gamma, beta )
-    local beta_associated, coarsed_morphisms, psi, psi_aid, beta2;
+    local   coarsed_morphisms, psi, psi_aid, beta2;
     
     if not Divides( gamma, beta ) then
         
@@ -470,9 +470,9 @@ InstallGlobalFunction( _Functor_PostDivide_ForGeneralizedMorphisms,
     
     coarsed_morphisms := CommonCoarsening( gamma, beta );
     
-    psi_aid := CokernelEpi( KernelEmb( AssociatedMorphism( coarsed_morphisms[ 2 ] ) ) );
+    psi_aid := ImageObjectEpi( AssociatedMorphism( coarsed_morphisms[ 2 ] ) );
     
-    beta2 := PreDivide( psi_aid, AssociatedMorphism( coarsed_morphisms[ 2 ] ) );
+    beta2 := ImageObjectEmb( AssociatedMorphism( coarsed_morphisms[ 2 ] ) );
     
     psi := PostDivide( AssociatedMorphism( coarsed_morphisms[ 1 ] ), beta2 );
     
