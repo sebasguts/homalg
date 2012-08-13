@@ -318,6 +318,8 @@ InstallGlobalFunction( _Functor_PreCompose_ForGeneralizedMorphisms,
     
     L_as_projection := CokernelEpi( PreCompose( K_as_product, AssociatedMorphism( psi ) ) );
     
+    L_as_projection := PreCompose( MorphismAid( psi ), L_as_projection );
+    
     psi_coarsed := Coarse( psi, L_as_projection );
     
     return GeneralizedMorphism( PreCompose( AssociatedMorphism( phi_coarsed ), AssociatedMorphism( psi_coarsed ) ), L_as_projection );
