@@ -460,7 +460,7 @@ InstallGlobalFunction( _Functor_PostDivide_ForGeneralizedMorphisms,
   function( gamma, beta )
     local beta_associated, coarsed_morphisms, psi, psi_aid, beta2;
     
-    if not Divides( beta, gamma ) then
+    if not Divides( gamma, beta ) then
         
         Error( "cannot lift this morphisms\n" );
         

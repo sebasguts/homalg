@@ -217,7 +217,7 @@ InstallMethod( GeneralizedInverse,
     
     range_object := Range( phi );
     
-    return PostDivide( phi, TheGeneralizedIdentityMorphism( range_object ) );
+    return PostDivide( TheGeneralizedIdentityMorphism( range_object ), phi );
     
 end );
 
