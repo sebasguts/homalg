@@ -1,0 +1,5 @@
+L="HomalgGeneralizedMorphism.gd HomalgGeneralizedMorphism.gi LIGMOR.gi GeneralizedMorphismFunctors.gd GeneralizedMorphismFunctors.gi"
+for i in $L; do
+sed -i s/GeneralizedMorphism/SebasGeneralizedMorphism/g $i
+sed -i s/MorphismAid/SebasMorphismAid/g $i
+done
