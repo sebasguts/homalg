@@ -10,30 +10,30 @@
 ##
 #############################################################################
 
-##
-InstallImmediateMethod( IsMorphism,
-                        IsHomalgGeneralizedMorphism and HasMorphismAid and HasAssociatedMorphism,
-                        0,
-                        
-  function( phi )
-    
-    if HasIsMorphism( AssociatedMorphism( phi ) ) and IsMorphism( AssociatedMorphism( phi ) ) then
-        
-        if HasIsMorphism( MorphismAid( phi ) ) and IsMorphism( MorphismAid( phi ) ) then
-            
-            if IsIdenticalObj( MorphismAid( phi ), AssociatedMorphism( phi ) ) then
-                
-                return true;
-                
-            fi;
-            
-        fi;
-        
-    fi;
-    
-    TryNextMethod();
-    
-end );
+# ##FIXME: THIS DOES NOT SEEM TO BE RIGHT
+# InstallImmediateMethod( IsMorphism,
+#                         IsHomalgGeneralizedMorphism and HasMorphismAid and HasAssociatedMorphism,
+#                         0,
+#                         
+#   function( phi )
+#     
+#     if HasIsMorphism( AssociatedMorphism( phi ) ) and IsMorphism( AssociatedMorphism( phi ) ) then
+#         
+#         if HasIsMorphism( MorphismAid( phi ) ) and IsMorphism( MorphismAid( phi ) ) then
+#             
+#             if IsIdenticalObj( MorphismAid( phi ), AssociatedMorphism( phi ) ) then
+#                 
+#                 return true;
+#                 
+#             fi;
+#             
+#         fi;
+#         
+#     fi;
+#     
+#     TryNextMethod();
+#     
+# end );
 
 ##
 InstallImmediateMethod( MorphismAidSubobject,

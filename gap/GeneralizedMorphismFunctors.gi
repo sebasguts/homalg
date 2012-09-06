@@ -75,7 +75,7 @@ InstallGlobalFunction( _Functor_Coarse_ForGeneralizedMorphisms,
     
     new_morphism := GeneralizedMorphism( new_morphism, coarse_morphism );
     
-    SetIsCoarsedOf( new_morphism, [ morphism, coarse_morphism ] );
+    new_morphism!.is_generated_by_coarsening_from := [ morphism, coarse_morphism ];
     
     return new_morphism;
     
@@ -178,6 +178,8 @@ InstallMethod( IsEffectiveCoarsening,
     
 end );
 
+## FIXME: What happens if coarse morphism is iso?
+
 ##
 InstallGlobalFunction( _Functor_IsEffectiveCoarsening_ForGeneralizedMorphisms,
   
@@ -205,6 +207,7 @@ InstallGlobalFunction( _Functor_IsEffectiveCoarsening_ForGeneralizedMorphisms,
     
     coarsed_morphism := Coarse( morphism, coarse_morphism );
     
+    ## FIXME: can one implement this with ProductMorphism?
     combined_image_embedding := EmbeddingInSuperObject( UnderlyingSubobject( CombinedImage( coarsed_morphism ) ) );
     
     pullback := Pullback( morphism_aid_embedding, combined_image_embedding );
@@ -300,7 +303,7 @@ InstallFunctor( functor_IsEffectiveCommonCoarsening_ForGeneralizedMorphisms );
 InstallGlobalFunction( _Functor_PreCompose_ForGeneralizedMorphisms,
   
   function( phi, psi )
-    local phi_aid, K_as_product, phi_K, phi_coarsed, L_as_projection, psi_L, psi_coarsed;
+    local phi_aid, phi_aid_kernel_object, psi_ass_kernel_obj, K_as_product, phi_K, phi_coarsed, L_as_projection, psi_L, psi_coarsed;
     
     if not IsIdenticalObj( Range( phi ), Source( psi ) ) then
         
@@ -310,7 +313,13 @@ InstallGlobalFunction( _Functor_PreCompose_ForGeneralizedMorphisms,
     
     phi_aid := MorphismAid( phi );
     
-    K_as_product := CoproductMorphism( KernelEmb( phi_aid ), KernelEmb( AssociatedMorphism( psi ) ) );
+    ## FIXME: Is there a method for a kernel, maybe delete parts in the case when aids are isos.
+    
+    phi_aid_kernel_object := MorphismHavingSubobjectAsItsImage( KernelSubobject( phi_aid ) );
+    
+    psi_ass_kernel_obj := MorphismHavingSubobjectAsItsImage( KernelSubobject( AssociatedMorphism( psi ) ) );
+    
+    K_as_product := CoproductMorphism( phi_aid_kernel_object, psi_ass_kernel_obj );
     
     phi_K := CokernelEpi( K_as_product );
     
@@ -411,7 +420,7 @@ InstallFunctor( functor_QuasiEqual_ForGeneralizedMorphisms );
 InstallGlobalFunction( _Functor_Divides_ForGeneralizedMorphisms,
   
   function( beta, gamma )
-    local common_coarsening, image_beta, image_gamma, gamma_coarsed;
+    local common_coarsening, image_beta, image_gamma, gamma_coarsed, coarse_data;
     
     common_coarsening := CommonCoarsening( beta, gamma );
     
@@ -423,13 +432,20 @@ InstallGlobalFunction( _Functor_Divides_ForGeneralizedMorphisms,
     
     image_gamma := EmbeddingInSuperObject( UnderlyingSubobject( image_gamma ) );
     
-    if not IsZero( PreCompose( image_gamma, image_beta ) ) then
+    if IsBound( common_coarsening[ 2 ]!.was_generated_by_effective_coarsening )
+        and not common_coarsening[ 2 ]!.was_generated_by_effective_coarsening then
+        
+        return false
+    
+    elif not IsZero( PreCompose( image_gamma, image_beta ) ) then
         
         return false;
         
     fi;
     
-    return WasCoarsedEffective( common_coarsening[ 2 ] );
+    coarse_data := common_coarsening!.is_generated_by_coarsening_from;
+    
+    return IsEffectiveCoarsening( coarse_data[ 1 ], coarse_data[ 2 ] );
     
 end );
 

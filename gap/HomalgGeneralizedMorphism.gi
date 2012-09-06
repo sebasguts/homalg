@@ -92,26 +92,6 @@ InstallMethod( IsGeneralizedIsomorphism,
 end );
 
 ##
-InstallMethod( WasCoarsedEffective,
-               "for generalized morphisms",
-               [ IsHomalgGeneralizedMorphism ],
-               
-  function( phi )
-    local coarsed_from;
-    
-    coarsed_from := IsCoarsedOf( phi );
-    
-    if coarsed_from <> fail then
-        
-        return IsEffectiveCoarsening( coarsed_from[ 1 ], coarsed_from[ 2 ] );
-        
-    fi;
-        
-    return false;
-    
-end );
-
-##
 InstallMethod( MorphismAidIsMonomorphism,
                "for generalized morphisms",
                [ IsHomalgGeneralizedMorphism ],
@@ -178,26 +158,13 @@ InstallMethod( CombinedImage,
                [ IsHomalgGeneralizedMorphism ],
                
   function( phi )
-    local image_morphism, image_projection, combination_of_morphisms;
+    local image_projection, combination_of_morphisms;
     
-    image_morphism := ImageObjectEmb( AssociatedMorphism( phi ) );
-    
-    image_projection := CokernelEpi( image_morphism );
+    image_projection := CokernelEpi( AssociatedMorphism( phi ) );
     
     combination_of_morphisms := PreCompose( MorphismAid( phi ), image_projection );
     
     return UnderlyingObject( KernelSubobject( combination_of_morphisms ) );
-    
-end );
-
-##
-InstallMethod( IsCoarsedOf,
-               "the fallback method for generalized morphisms",
-               [ IsHomalgGeneralizedMorphism ],
-               
-  function( phi )
-    
-    return fail;
     
 end );
 
@@ -218,6 +185,23 @@ InstallMethod( GeneralizedInverse,
     range_object := Range( phi );
     
     return PostDivide( TheGeneralizedIdentityMorphism( range_object ), phi );
+    
+end );
+
+##
+InstallMethod( HomalgMorphism,
+               "converts to well defined morphism",
+               [ IsHomalgGeneralizedMorphism ],
+               
+  function( phi )
+    
+    if IsMonomorphism( MorphismAid( phi ) ) then
+        
+        return AssociatedMorphism( phi );
+        
+    fi;
+    
+    return fail;
     
 end );
 

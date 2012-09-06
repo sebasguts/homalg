@@ -100,9 +100,7 @@ DeclareProperty( "IsGeneralizedIsomorphism",
 DeclareProperty( "IsOne",
         IsHomalgGeneralizedMorphism );
 
-DeclareProperty( "WasCoarsedEffective",
-        IsHomalgGeneralizedMorphism );
-
+##FIXME: Make a PullProperty from this.
 DeclareProperty( "MorphismAidIsMonomorphism",
         IsHomalgGeneralizedMorphism );
 
@@ -157,12 +155,6 @@ DeclareAttribute( "KernelSubobject",
 DeclareAttribute( "CombinedImage",
         IsHomalgGeneralizedMorphism );
 
-DeclareAttribute( "IsCoarsedOf",
-        IsHomalgGeneralizedMorphism );
-
-DeclareAttribute( "GeneralizedInverse",
-        IsHomalgGeneralizedMorphism );
-
 ####################################
 #
 # methods:
@@ -193,6 +185,9 @@ DeclareOperation( "PostDivide",
 DeclareOperation( "TheGeneralizedIdentityMorphism",
        [ IsHomalgObject ] );
 
+DeclareOperation( "HomalgMorphism",
+       [ IsHomalgGeneralizedMorphism ] );
+
 ####################################
 #
 # Constructors
@@ -201,3 +196,10 @@ DeclareOperation( "TheGeneralizedIdentityMorphism",
 
 DeclareOperation( "GeneralizedMorphism",
        [ IsHomalgMorphism, IsHomalgObjectOrMorphism ] );
+
+##TODO: Hey, I just recognize,
+##      The aid is mono
+##      so change my type to
+##      morphism maybe?
+
+##     Implement a method to change type to morphism if needed.
