@@ -335,17 +335,17 @@ end );
 InstallGlobalFunction( LogicalImplicationsForHomalgSubobjects,
   function( prop_attr, filter_subobject, test_underlying_object, fetch_underlying_object )
     
-    InstallImmediateMethod( prop_attr,
-            filter_subobject and test_underlying_object, 0,
-            
-      function( o )
-        if Tester( prop_attr )( fetch_underlying_object( o ) ) then
-            return prop_attr( fetch_underlying_object( o ) );
-        fi;
-        
-        TryNextMethod( );
-        
-      end );
+#     InstallImmediateMethod( prop_attr,
+#             filter_subobject and test_underlying_object, 0,
+#             
+#       function( o )
+#         if Tester( prop_attr )( fetch_underlying_object( o ) ) then
+#             return prop_attr( fetch_underlying_object( o ) );
+#         fi;
+#         
+#         TryNextMethod( );
+#         
+#       end );
     
     InstallMethod( prop_attr,
         "for homalg subobjects",
