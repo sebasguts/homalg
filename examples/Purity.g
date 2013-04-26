@@ -73,7 +73,8 @@
 ##  gap> IsIdenticalObj( Range( m ), M );
 ##  true
 ##  gap> Source( m );
-##  <A non-torsion left module presented by 2 relations for 3 generators (locked)>
+##  <A non-pure rank 1 left module presented by 2 relations for 3 generato\
+##  rs (locked)>
 ##  gap> Display( last );
 ##  [ [   0,   2,   0 ],
 ##    [   0,   0,  12 ] ]
